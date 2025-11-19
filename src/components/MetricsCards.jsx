@@ -33,7 +33,7 @@ function MetricsCards({
         }`}>
           {t('metrics.monthlyCost')}
         </p>
-        <p className={`text-4xl sm:text-5xl font-bold tracking-tight mb-2 ${
+        <p className={`text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-2 break-words ${
           darkMode ? 'text-white' : 'text-gray-900'
         }`}>
           {new Intl.NumberFormat('en-US', {
@@ -58,7 +58,7 @@ function MetricsCards({
         }`}>
           {t('metrics.futureDebt')}
         </p>
-        <p className={`text-4xl sm:text-5xl font-bold tracking-tight mb-2 ${
+        <p className={`text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-2 break-words ${
           darkMode ? 'text-orange-300' : 'text-orange-600'
         }`}>
           {new Intl.NumberFormat('en-US', {
@@ -83,7 +83,7 @@ function MetricsCards({
         }`}>
           {t('metrics.activeSubscriptions')}
         </p>
-        <p className={`text-4xl sm:text-5xl font-bold tracking-tight mb-2 ${
+        <p className={`text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-2 break-words ${
           darkMode ? 'text-white' : 'text-gray-900'
         }`}>
           {totalActive}
