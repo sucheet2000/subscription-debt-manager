@@ -1,0 +1,213 @@
+{
+  "app": {
+    "title": "Gestor de Deuda de Suscripciones",
+    "subtitle": "Rastrear y administrar sus suscripciones recurrentes"
+  },
+  "header": {
+    "darkMode": "Cambiar a modo claro",
+    "lightMode": "Cambiar a modo oscuro",
+    "addSubscription": "Agregar Suscripción",
+    "add": "Agregar",
+    "backupRestore": "Copia de seguridad y restauración",
+    "settings": "Configuración"
+  },
+  "profile": {
+    "title": "Configuración de Cuenta",
+    "accountSettings": "Configuración de Cuenta",
+    "securitySettings": "Seguridad",
+    "emailManagement": "Gestión de Correo",
+    "currentEmail": "Correo Actual",
+    "newEmail": "Nuevo Correo",
+    "enterNewEmail": "Ingrese su nuevo correo",
+    "updateEmail": "Actualizar Correo",
+    "changePassword": "Cambiar Contraseña",
+    "newPassword": "Nueva Contraseña",
+    "enterNewPassword": "Ingrese la nueva contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "confirmNewPassword": "Confirme la nueva contraseña",
+    "updatePassword": "Actualizar Contraseña",
+    "logout": "Cerrar Sesión",
+    "confirmLogout": "¿Está seguro de que desea cerrar sesión?",
+    "logoutError": "Error al cerrar sesión",
+    "emailRequired": "Ingrese un nuevo correo",
+    "emailUpdated": "Correo actualizado exitosamente",
+    "passwordRequired": "Rellene todos los campos de contraseña",
+    "passwordUpdated": "Contraseña actualizada exitosamente",
+    "passwordsMismatch": "Las contraseñas no coinciden",
+    "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+    "requiresRecentLogin": "Cierre sesión e inicie sesión nuevamente para cambiar esto",
+    "updating": "Actualizando..."
+  },
+  "metrics": {
+    "monthlyCost": "Costo Mensual",
+    "monthlyCostSubtitle": "Costo recurrente promedio por mes",
+    "futureDebt": "Deuda Futura (12 Meses)",
+    "futureDebtSubtitle": "Costo total de todas las renovaciones próximas",
+    "activeSubscriptions": "Suscripciones Activas",
+    "pendingCancellation": "cancelación pendiente",
+    "noPendingCancellations": "Sin cancelaciones pendientes",
+    "budgetStatus": "Estado del Presupuesto",
+    "clickToSetBudget": "Haga clic para establecer presupuesto",
+    "noBudgetConfigured": "Presupuesto no configurado aún",
+    "budgetExceeded": "⚠️ ¡Presupuesto excedido!",
+    "approachingBudget": "⚡ Aproximándose al presupuesto",
+    "withinBudget": "✓ Dentro del presupuesto"
+  },
+  "analytics": {
+    "title": "Panel de Análisis",
+    "spendingByCategory": "Gastos por Categoría",
+    "topExpensive": "Top 5 Más Caro",
+    "sortedByCost": "Ordenado por costo",
+    "monthlyBilling": "Facturación mensual",
+    "monthlyTrend": "Proyección de Gastos de 12 Meses",
+    "projectedCost": "Costo Proyectado",
+    "avgSpending": "Promedio Mensual",
+    "spendingTrend": "De Mes a Mes",
+    "savingsPotential": "Ahorros Mensuales",
+    "projected3Month": "Proyección de 3 Meses",
+    "spendingForecast": "Pronóstico de 12 Meses con Proyección",
+    "categoryTrend": "Gastos por Categoría",
+    "categoryDetails": "Desglose de Categoría",
+    "savingsOpportunity": "Oportunidades de Ahorro Identificadas"
+  },
+  "alerts": {
+    "upcomingRenewals": "Renovaciones Próximas en los Próximos 30 Días",
+    "loadingSubscriptions": "Cargando sus suscripciones..."
+  },
+  "filters": {
+    "title": "Buscar y Filtrar",
+    "searchPlaceholder": "Buscar por nombre de suscripción...",
+    "status": "Estado",
+    "category": "Categoría",
+    "minCost": "Costo Mínimo",
+    "maxCost": "Costo Máximo",
+    "startDate": "Fecha de Inicio",
+    "endDate": "Fecha de Fin",
+    "exportCSV": "Exportar CSV",
+    "exportReport": "Exportar Informe",
+    "clearFilters": "Limpiar Filtros",
+    "all": "Todos",
+    "active": "Activo",
+    "paused": "En Pausa",
+    "cancelled": "Cancelado",
+    "uncategorized": "Sin Categoría"
+  },
+  "table": {
+    "title": "Suscripciones Activas",
+    "noActive": "Sin suscripciones activas aún",
+    "name": "Nombre",
+    "cost": "Costo",
+    "billingCycle": "Ciclo de Facturación",
+    "nextRenewal": "Próxima Renovación",
+    "category": "Categoría",
+    "status": "Estado",
+    "actions": "Acciones",
+    "edit": "Editar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "noCancellations": "Cancelaciones Pendientes"
+  },
+  "form": {
+    "addNew": "Agregar Nueva Suscripción",
+    "edit": "Editar Suscripción",
+    "subscriptionName": "Nombre de Suscripción",
+    "cost": "Costo",
+    "currency": "Moneda",
+    "billingCycle": "Ciclo de Facturación",
+    "nextRenewalDate": "Fecha de Próxima Renovación",
+    "category": "Categoría (Opcional)",
+    "status": "Estado",
+    "addButton": "Agregar Suscripción",
+    "updateButton": "Actualizar Suscripción",
+    "cancelButton": "Cancelar",
+    "monthly": "Mensual",
+    "quarterly": "Trimestral",
+    "annually": "Anual"
+  },
+  "validation": {
+    "nameRequired": "Se requiere el nombre de la suscripción",
+    "costInvalid": "El costo debe ser un número positivo",
+    "dateRequired": "Se requiere la fecha de renovación",
+    "dateFuture": "La fecha de renovación debe ser en el futuro",
+    "formErrors": "Por favor corrija los errores en el formulario",
+    "addedSuccess": "agregado exitosamente",
+    "updatedSuccess": "actualizado exitosamente",
+    "failedToSave": "Error al guardar la suscripción. Por favor intente de nuevo.",
+    "deleteConfirm": "¿Está seguro de que desea eliminar esta suscripción?"
+  },
+  "duplicates": {
+    "title": "Posible Duplicado",
+    "description": "Encontramos suscripciones con nombres similares. Asegúrese de no agregar un duplicado:",
+    "newSubscription": "Nueva suscripción:",
+    "proceed": "¿Desea proceder de todos modos?",
+    "yesAdd": "Sí, Agregarlo",
+    "cancelAction": "Cancelar",
+    "match": "% coincidencia"
+  },
+  "budget": {
+    "title": "Configuración de Presupuesto",
+    "budgetType": "Tipo de Presupuesto",
+    "budgetLimit": "Límite de Presupuesto",
+    "monthly": "Mensual",
+    "annual": "Anual",
+    "saveBudget": "Guardar Presupuesto",
+    "clearBudget": "Limpiar",
+    "spendingInfo": "Información de Gastos:",
+    "current": "Actual:",
+    "budget": "Presupuesto:",
+    "used": "Utilizado:"
+  },
+  "recommendations": {
+    "title": "Recomendaciones Inteligentes",
+    "impact": "Impacto Potencial",
+    "severity": {
+      "high": "Alta Prioridad",
+      "medium": "Prioridad Media",
+      "low": "Baja Prioridad"
+    }
+  },
+  "backup": {
+    "title": "Copia de Seguridad y Restauración",
+    "description": "Haga una copia de seguridad de sus suscripciones localmente o restaure desde un archivo de copia de seguridad descargado anteriormente.",
+    "downloadButton": "Descargar Copia de Seguridad Actual",
+    "restoreSection": "Restaurar desde Archivo",
+    "restoreHelper": "Seleccione un archivo de copia de seguridad .json para restaurar sus suscripciones. Esto agregará todas las suscripciones del archivo.",
+    "autoBuckup": "ℹ️ Copias de Seguridad Automáticas",
+    "autoBackupInfo": "Sus suscripciones se respaldan automáticamente en el almacenamiento local de su navegador. Se conservan hasta 10 copias de seguridad.",
+    "closeButton": "Cerrar",
+    "downloadSuccess": "Copia de seguridad descargada exitosamente",
+    "downloadError": "Error al descargar la copia de seguridad",
+    "restoreSuccess": "Restaurado",
+    "restoreError": "Error al restaurar la copia de seguridad. Asegúrese de que sea un archivo de copia de seguridad válido.",
+    "restorePlural": "suscripciones desde la copia de seguridad"
+  },
+  "toast": {
+    "success": "Éxito",
+    "error": "Error",
+    "warning": "Advertencia",
+    "info": "Información"
+  },
+  "footer": {
+    "about": {
+      "title": "Acerca del Gestor de Deuda de Suscripciones",
+      "description": "Tome el control de sus gastos de suscripción y administre los pagos recurrentes con confianza. Nuestra aplicación le ayuda a rastrear, analizar y optimizar sus suscripciones para reducir costos mensuales y eliminar cargos recurrentes olvidados.",
+      "feature1": {
+        "name": "Seguimiento de Gastos en Tiempo Real",
+        "description": "Supervise todas sus suscripciones en un solo lugar con desgloses de costos detallados y tendencias de gastos"
+      },
+      "feature2": {
+        "name": "Recordatorios Inteligentes de Renovación",
+        "description": "Reciba notificaciones por correo electrónico antes de que se renueven sus suscripciones para que nunca pierda una oportunidad de ahorrar"
+      },
+      "feature3": {
+        "name": "Análisis de Gastos e Información",
+        "description": "Visualice sus patrones de gasto con gráficos interactivos e identifique áreas para reducir costos"
+      },
+      "feature4": {
+        "name": "Gestión de Suscripciones",
+        "description": "Administre, pause o cancele suscripciones fácilmente con nuestra interfaz intuitiva y simple"
+      }
+    },
+    "copyright": "© 2024 Gestor de Deuda de Suscripciones. Todos los derechos reservados."
+  }
+}
