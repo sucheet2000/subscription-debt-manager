@@ -383,7 +383,7 @@ const getMonthlyTrendData = (subscriptions) => {
 };
 
 // Smart Recommendations Engine
-const getRecommendations = (subscriptions, budgetLimit, budgetType) => {
+const getRecommendations = (subscriptions, budgetLimit, budgetType, budgetCurrency = 'USD') => {
   const recommendations = [];
 
   if (!subscriptions || subscriptions.length === 0) {
@@ -466,7 +466,7 @@ const getRecommendations = (subscriptions, budgetLimit, budgetType) => {
       recommendations.push({
         id: 'budget-alert',
         title: 'Approaching monthly budget',
-        description: `You're spending $${monthlyTotal.toFixed(2)} of your $${budgetLimit.toFixed(2)} budget.`,
+        description: `You're spending ${budgetCurrency} ${monthlyTotal.toFixed(2)} of your ${budgetCurrency} ${budgetLimit.toFixed(2)} budget.`,
         severity: monthlyTotal > budgetLimit ? 'high' : 'medium',
         impact: `${((monthlyTotal / budgetLimit) * 100).toFixed(0)}% of budget used. Consider cancelling or downgrading some subscriptions.`,
       });
@@ -561,6 +561,10 @@ export default function App() {
     const saved = localStorage.getItem('budgetType');
     return saved || 'Monthly';
   });
+  const [budgetCurrency, setBudgetCurrency] = useState(() => {
+    const saved = localStorage.getItem('budgetCurrency');
+    return saved || 'USD';
+  });
   const [showBudgetModal, setShowBudgetModal] = useState(false);
 
   // Duplicate Detection State
@@ -595,8 +599,9 @@ export default function App() {
     if (budgetLimit !== null) {
       localStorage.setItem('budgetLimit', budgetLimit.toString());
       localStorage.setItem('budgetType', budgetType);
+      localStorage.setItem('budgetCurrency', budgetCurrency);
     }
-  }, [budgetLimit, budgetType]);
+  }, [budgetLimit, budgetType, budgetCurrency]);
 
   // ===== CUSTOM HOOKS INTEGRATION =====
   // Initialize all three custom hooks for business logic
@@ -1245,7 +1250,7 @@ export default function App() {
         {!dismissedRecommendations && (
           <Suspense fallback={<LazyComponentLoader darkMode={darkMode} />}>
             <RecommendationsPanel
-              recommendations={getRecommendations(subscriptionsFromHook, budgetLimit, budgetType)}
+              recommendations={getRecommendations(subscriptionsFromHook, budgetLimit, budgetType, budgetCurrency)}
               onDismiss={() => setDismissedRecommendations(true)}
             />
           </Suspense>
@@ -1261,6 +1266,7 @@ export default function App() {
           isBudgetExceeded={isBudgetExceeded}
           isApproachingBudget={isApproachingBudget}
           metricsCurrency={metricsCurrency}
+          budgetCurrency={budgetCurrency}
           darkMode={darkMode}
           onBudgetClick={() => setShowBudgetModal(true)}
         />
@@ -1997,12 +2003,118 @@ export default function App() {
                 </div>
               </div>
 
+              {/* Budget Currency Selection */}
+              <div>
+                <label className={`block text-sm font-semibold mb-3 ${
+                  darkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
+                  Budget Currency
+                </label>
+                <select
+                  value={budgetCurrency}
+                  onChange={(e) => setBudgetCurrency(e.target.value)}
+                  className={`w-full px-4 py-3 rounded-lg border transition-all focus:outline-none focus:ring-2 ${
+                    darkMode
+                      ? 'bg-gray-700 border-gray-600 text-white focus:ring-accent-300/50'
+                      : 'bg-white border-gray-300 text-gray-900 focus:ring-accent-300/50'
+                  }`}
+                >
+                  <optgroup label="Popular">
+                    <option>USD</option>
+                    <option>EUR</option>
+                    <option>GBP</option>
+                    <option>JPY</option>
+                    <option>AUD</option>
+                    <option>CAD</option>
+                    <option>CHF</option>
+                  </optgroup>
+
+                  <optgroup label="Asia Pacific">
+                    <option>AFN</option>
+                    <option>BDT</option>
+                    <option>BND</option>
+                    <option>CNY</option>
+                    <option>HKD</option>
+                    <option>IDR</option>
+                    <option>INR</option>
+                    <option>KHR</option>
+                    <option>KRW</option>
+                    <option>KZT</option>
+                    <option>LAK</option>
+                    <option>LKR</option>
+                    <option>MMK</option>
+                    <option>MNT</option>
+                    <option>MOP</option>
+                    <option>MYR</option>
+                    <option>NPR</option>
+                    <option>NZD</option>
+                    <option>PHP</option>
+                    <option>PKR</option>
+                    <option>SGD</option>
+                    <option>THB</option>
+                    <option>TWD</option>
+                    <option>UZS</option>
+                    <option>VND</option>
+                  </optgroup>
+
+                  <optgroup label="Europe">
+                    <option>BGN</option>
+                    <option>CZK</option>
+                    <option>DKK</option>
+                    <option>HRK</option>
+                    <option>HUF</option>
+                    <option>ISK</option>
+                    <option>NOK</option>
+                    <option>PLN</option>
+                    <option>RON</option>
+                    <option>RUB</option>
+                    <option>SEK</option>
+                    <option>TRY</option>
+                    <option>UAH</option>
+                  </optgroup>
+
+                  <optgroup label="Americas">
+                    <option>ARS</option>
+                    <option>BRL</option>
+                    <option>CLP</option>
+                    <option>COP</option>
+                    <option>MXN</option>
+                    <option>PEN</option>
+                    <option>UYU</option>
+                  </optgroup>
+
+                  <optgroup label="Middle East & Africa">
+                    <option>AED</option>
+                    <option>BHD</option>
+                    <option>DZD</option>
+                    <option>EGP</option>
+                    <option>GHS</option>
+                    <option>ILS</option>
+                    <option>IQD</option>
+                    <option>JOD</option>
+                    <option>KES</option>
+                    <option>KWD</option>
+                    <option>LBP</option>
+                    <option>MAD</option>
+                    <option>NGN</option>
+                    <option>OMR</option>
+                    <option>QAR</option>
+                    <option>SAR</option>
+                    <option>SYP</option>
+                    <option>TND</option>
+                    <option>UGX</option>
+                    <option>YER</option>
+                    <option>ZAR</option>
+                  </optgroup>
+                </select>
+              </div>
+
               {/* Budget Amount Input */}
               <div>
                 <label className={`block text-sm font-semibold mb-3 ${
                   darkMode ? 'text-gray-300' : 'text-gray-700'
                 }`}>
-                  Budget Limit ({metricsCurrency})
+                  Budget Limit ({budgetCurrency})
                 </label>
                 <input
                   type="number"
@@ -2031,10 +2143,10 @@ export default function App() {
                   </p>
                   <div className="space-y-1 text-xs">
                     <p className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
-                      Current: {metricsCurrency} {currentSpending.toFixed(2)}
+                      Current: {budgetCurrency} {currentSpending.toFixed(2)}
                     </p>
                     <p className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
-                      Budget: {metricsCurrency} {budgetLimit.toFixed(2)}
+                      Budget: {budgetCurrency} {budgetLimit.toFixed(2)}
                     </p>
                     <p className={budgetSpent > 100 ? 'text-red-500' : budgetSpent > 80 ? 'text-yellow-500' : 'text-green-500'}>
                       Used: {budgetSpent.toFixed(0)}%
@@ -2049,7 +2161,7 @@ export default function App() {
                   onClick={() => {
                     if (budgetLimit) {
                       setToast({
-                        message: `Budget set to ${budgetType} ${metricsCurrency} ${budgetLimit.toFixed(2)}`,
+                        message: `Budget set to ${budgetType} ${budgetCurrency} ${budgetLimit.toFixed(2)}`,
                         type: 'success',
                       });
                     }

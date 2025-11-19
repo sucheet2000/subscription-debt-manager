@@ -15,6 +15,7 @@ function MetricsCards({
   isBudgetExceeded,
   isApproachingBudget,
   metricsCurrency,
+  budgetCurrency,
   darkMode,
   onBudgetClick,
 }) {
