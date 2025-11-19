@@ -18,6 +18,8 @@ export default function EnhancedAnalytics({
   subscriptions,
   monthlyTrendData,
   darkMode,
+  analyticsCurrency,
+  setAnalyticsCurrency,
 }) {
   const { t } = useTranslation();
   const [selectedMetric, setSelectedMetric] = useState('trend');
@@ -27,6 +29,15 @@ export default function EnhancedAnalytics({
   if (!subscriptions || subscriptions.length === 0) {
     return null;
   }
+
+  // Currency formatting helper
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: analyticsCurrency || 'USD',
+      minimumFractionDigits: 2,
+    }).format(amount);
+  };
 
   // Category color mapping
   const getCategoryColor = (category) => {
@@ -228,6 +239,108 @@ export default function EnhancedAnalytics({
 
   return (
     <div className="space-y-6">
+      {/* Currency Selector */}
+      <div className="flex justify-end mb-4">
+        <div className="flex items-center gap-3">
+          <label className={`text-sm font-semibold ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+            Analytics Currency:
+          </label>
+          <select
+            value={analyticsCurrency}
+            onChange={(e) => setAnalyticsCurrency(e.target.value)}
+            className={`px-4 py-2 rounded-lg border transition-all focus:outline-none focus:ring-2 ${
+              darkMode
+                ? 'bg-gray-700 border-gray-600 text-white focus:ring-accent-300/50'
+                : 'bg-white border-gray-300 text-gray-900 focus:ring-accent-300/50'
+            }`}
+          >
+            <optgroup label="Popular">
+              <option>USD</option>
+              <option>EUR</option>
+              <option>GBP</option>
+              <option>JPY</option>
+              <option>AUD</option>
+              <option>CAD</option>
+              <option>CHF</option>
+            </optgroup>
+            <optgroup label="Asia Pacific">
+              <option>AFN</option>
+              <option>BDT</option>
+              <option>BND</option>
+              <option>CNY</option>
+              <option>HKD</option>
+              <option>IDR</option>
+              <option>INR</option>
+              <option>KHR</option>
+              <option>KRW</option>
+              <option>KZT</option>
+              <option>LAK</option>
+              <option>LKR</option>
+              <option>MMK</option>
+              <option>MNT</option>
+              <option>MOP</option>
+              <option>MYR</option>
+              <option>NPR</option>
+              <option>NZD</option>
+              <option>PHP</option>
+              <option>PKR</option>
+              <option>SGD</option>
+              <option>THB</option>
+              <option>TWD</option>
+              <option>UZS</option>
+              <option>VND</option>
+            </optgroup>
+            <optgroup label="Europe">
+              <option>BGN</option>
+              <option>CZK</option>
+              <option>DKK</option>
+              <option>HRK</option>
+              <option>HUF</option>
+              <option>ISK</option>
+              <option>NOK</option>
+              <option>PLN</option>
+              <option>RON</option>
+              <option>RUB</option>
+              <option>SEK</option>
+              <option>TRY</option>
+              <option>UAH</option>
+            </optgroup>
+            <optgroup label="Americas">
+              <option>ARS</option>
+              <option>BRL</option>
+              <option>CLP</option>
+              <option>COP</option>
+              <option>MXN</option>
+              <option>PEN</option>
+              <option>UYU</option>
+            </optgroup>
+            <optgroup label="Middle East & Africa">
+              <option>AED</option>
+              <option>BHD</option>
+              <option>DZD</option>
+              <option>EGP</option>
+              <option>GHS</option>
+              <option>ILS</option>
+              <option>IQD</option>
+              <option>JOD</option>
+              <option>KES</option>
+              <option>KWD</option>
+              <option>LBP</option>
+              <option>MAD</option>
+              <option>NGN</option>
+              <option>OMR</option>
+              <option>QAR</option>
+              <option>SAR</option>
+              <option>SYP</option>
+              <option>TND</option>
+              <option>UGX</option>
+              <option>YER</option>
+              <option>ZAR</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+
       {/* Key Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Average Spending */}
@@ -236,7 +349,7 @@ export default function EnhancedAnalytics({
             {t('analytics.avgSpending', 'Average Monthly')}
           </p>
           <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            ${avgSpending}
+            {formatCurrency(avgSpending)}
           </p>
         </div>
 
@@ -248,7 +361,7 @@ export default function EnhancedAnalytics({
             </p>
             <div className="flex items-center gap-2">
               <p className={`text-2xl font-bold ${trend.isIncreasing ? 'text-red-400' : 'text-green-400'}`}>
-                {trend.isIncreasing ? '+' : ''}{trend.change}
+                {trend.isIncreasing ? '+' : ''}{formatCurrency(trend.change)}
               </p>
               {trend.isIncreasing ? (
                 <TrendingUp size={20} className="text-red-400" />
@@ -268,7 +381,7 @@ export default function EnhancedAnalytics({
             {t('analytics.savingsPotential', 'Monthly Savings')}
           </p>
           <p className={`text-2xl font-bold text-accent-300`}>
-            ${savingsPotential.monthlySavings}
+            {formatCurrency(savingsPotential.monthlySavings)}
           </p>
           <p className={`text-xs mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
             {savingsPotential.pausedCount} paused + {savingsPotential.highCostCount} expensive
@@ -283,10 +396,12 @@ export default function EnhancedAnalytics({
           {forecastData.length > 0 && (
             <>
               <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                ${forecastData[forecastData.length - 1].cost}
+                {forecastData[forecastData.length - 1].forecastSpending
+                  ? formatCurrency(forecastData[forecastData.length - 1].forecastSpending)
+                  : formatCurrency(forecastData[forecastData.length - 1].actualSpending || 0)}
               </p>
               <p className={`text-xs mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                Average: ${avgSpending}/month
+                Average: {formatCurrency(avgSpending)}/month
               </p>
             </>
           )}
@@ -317,7 +432,7 @@ export default function EnhancedAnalytics({
                   padding: '12px 16px'
                 }}
                 labelStyle={{ color: darkMode ? '#f3f4f6' : '#111827', fontWeight: 'bold' }}
-                formatter={(value) => `$${parseFloat(value).toFixed(2)}`}
+                formatter={(value) => formatCurrency(parseFloat(value))}
               />
               <Legend wrapperStyle={{ paddingTop: '16px' }} />
               <Line
@@ -427,7 +542,7 @@ export default function EnhancedAnalytics({
                       <div className="flex items-center justify-end gap-3">
                         <div className="flex-shrink-0 text-right">
                           <p className={`font-bold text-lg ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                            ${totalMonthlyNum.toFixed(2)}
+                            {formatCurrency(totalMonthlyNum)}
                           </p>
                           <div className={`w-32 h-2 rounded-full mt-2 overflow-hidden ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
                             <div
@@ -444,7 +559,7 @@ export default function EnhancedAnalytics({
                           ? 'bg-gray-700/50 text-gray-200'
                           : 'bg-gray-100 text-gray-700'
                       }`}>
-                        ${avgCostNum.toFixed(2)}
+                        {formatCurrency(avgCostNum)}
                       </span>
                     </td>
                     <td className={`py-4 px-4 text-right`}>
@@ -481,7 +596,7 @@ export default function EnhancedAnalytics({
                 {t('analytics.savingsOpportunity', 'Savings Opportunities Identified')}
               </h4>
               <p className={`text-sm ${darkMode ? 'text-blue-200' : 'text-blue-800'}`}>
-                You could save <span className="font-bold">${savingsPotential.monthlySavings}/month</span> by:
+                You could save <span className="font-bold">{formatCurrency(savingsPotential.monthlySavings)}/month</span> by:
               </p>
               <ul className={`mt-2 text-sm space-y-1 ${darkMode ? 'text-blue-200' : 'text-blue-800'}`}>
                 {savingsPotential.pausedCount > 0 && (

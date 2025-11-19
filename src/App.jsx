@@ -569,6 +569,10 @@ export default function App() {
     const saved = localStorage.getItem('budgetDisplayMode');
     return saved || 'percentage';
   });
+  const [analyticsCurrency, setAnalyticsCurrency] = useState(() => {
+    const saved = localStorage.getItem('analyticsCurrency');
+    return saved || 'USD';
+  });
   const [showBudgetModal, setShowBudgetModal] = useState(false);
 
   // Duplicate Detection State
@@ -602,11 +606,12 @@ export default function App() {
   useEffect(() => {
     if (budgetLimit !== null) {
       localStorage.setItem('budgetLimit', budgetLimit.toString());
-      localStorage.setItem('budgetType', budgetType);
-      localStorage.setItem('budgetCurrency', budgetCurrency);
     }
+    localStorage.setItem('budgetType', budgetType);
+    localStorage.setItem('budgetCurrency', budgetCurrency);
     localStorage.setItem('budgetDisplayMode', budgetDisplayMode);
-  }, [budgetLimit, budgetType, budgetCurrency, budgetDisplayMode]);
+    localStorage.setItem('analyticsCurrency', analyticsCurrency);
+  }, [budgetLimit, budgetType, budgetCurrency, budgetDisplayMode, analyticsCurrency]);
 
   // ===== CUSTOM HOOKS INTEGRATION =====
   // Initialize all three custom hooks for business logic
@@ -772,11 +777,9 @@ export default function App() {
       // Validate and sanitize subscription data using security utilities
       const validationResult = validateSubscription(formData);
       if (!validationResult.valid) {
-        const errorMessages = Object.entries(validationResult.errors)
-          .map(([field, message]) => `${field}: ${message}`)
-          .join('\n');
+        const errorMessages = Object.values(validationResult.errors).join('. ');
         setToast({
-          message: `Validation failed:\n${errorMessages}`,
+          message: errorMessages,
           type: 'error',
         });
         return;
@@ -1413,6 +1416,8 @@ export default function App() {
                 subscriptions={activeSubscriptions}
                 monthlyTrendData={getMonthlyTrendData(activeSubscriptions)}
                 darkMode={darkMode}
+                analyticsCurrency={analyticsCurrency}
+                setAnalyticsCurrency={setAnalyticsCurrency}
               />
             </Suspense>
           </div>
