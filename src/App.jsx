@@ -1706,17 +1706,30 @@ export default function App() {
 
                   {/* Asia Pacific */}
                   <optgroup label="Asia Pacific">
+                    <option>AFN</option>
+                    <option>BDT</option>
+                    <option>BND</option>
                     <option>CNY</option>
                     <option>HKD</option>
-                    <option>INR</option>
                     <option>IDR</option>
+                    <option>INR</option>
+                    <option>KHR</option>
                     <option>KRW</option>
+                    <option>KZT</option>
+                    <option>LAK</option>
+                    <option>LKR</option>
+                    <option>MMK</option>
+                    <option>MNT</option>
+                    <option>MOP</option>
                     <option>MYR</option>
+                    <option>NPR</option>
                     <option>NZD</option>
                     <option>PHP</option>
+                    <option>PKR</option>
                     <option>SGD</option>
                     <option>THB</option>
                     <option>TWD</option>
+                    <option>UZS</option>
                     <option>VND</option>
                   </optgroup>
 
@@ -1751,11 +1764,25 @@ export default function App() {
                   {/* Middle East & Africa */}
                   <optgroup label="Middle East & Africa">
                     <option>AED</option>
+                    <option>BHD</option>
+                    <option>DZD</option>
                     <option>EGP</option>
+                    <option>GHS</option>
                     <option>ILS</option>
+                    <option>IQD</option>
+                    <option>JOD</option>
                     <option>KES</option>
                     <option>KWD</option>
+                    <option>LBP</option>
+                    <option>MAD</option>
+                    <option>NGN</option>
+                    <option>OMR</option>
+                    <option>QAR</option>
                     <option>SAR</option>
+                    <option>SYP</option>
+                    <option>TND</option>
+                    <option>UGX</option>
+                    <option>YER</option>
                     <option>ZAR</option>
                   </optgroup>
                 </select>
