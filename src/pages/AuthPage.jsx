@@ -63,12 +63,12 @@ export default function AuthPage() {
       }
     } catch (err) {
       const errorMessages = {
-        'auth/email-already-in-use': 'Email is already registered',
-        'auth/invalid-email': 'Invalid email address',
-        'auth/weak-password': 'Password is too weak',
-        'auth/user-not-found': 'User not found',
-        'auth/wrong-password': 'Wrong password',
-        'auth/too-many-requests': 'Too many login attempts. Please try again later.',
+        'auth/email-already-in-use': 'Email: Already registered',
+        'auth/invalid-email': 'Email: Invalid format',
+        'auth/weak-password': 'Password: Too weak (minimum 6 characters)',
+        'auth/user-not-found': 'Email: User not found',
+        'auth/wrong-password': 'Password: Incorrect',
+        'auth/too-many-requests': 'Login: Too many attempts. Please try again later.',
       };
       setError(errorMessages[err.code] || err.message);
     } finally {

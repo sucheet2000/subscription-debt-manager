@@ -41,7 +41,7 @@ export default function ProfilePage({ onBack, darkMode }) {
   const handleChangeEmail = async (e) => {
     e.preventDefault();
     if (!newEmail) {
-      showMessage(t('profile.emailRequired', 'Please enter a new email'), 'error');
+      showMessage(t('profile.emailRequired', 'Email: Please enter a new email address'), 'error');
       return;
     }
 
@@ -52,12 +52,12 @@ export default function ProfilePage({ onBack, darkMode }) {
       showMessage(t('profile.emailUpdated', 'Email updated successfully'), 'success');
     } catch (error) {
       const errorMessages = {
-        'auth/invalid-email': t('validation.invalidEmail', 'Invalid email address'),
-        'auth/email-already-in-use': t('validation.emailInUse', 'Email is already in use'),
-        'auth/requires-recent-login': t('profile.requiresRecentLogin', 'Please log out and log in again to change email'),
+        'auth/invalid-email': t('validation.invalidEmail', 'Email: Invalid format'),
+        'auth/email-already-in-use': t('validation.emailInUse', 'Email: Already in use'),
+        'auth/requires-recent-login': t('profile.requiresRecentLogin', 'Email: Please log out and log in again to update'),
       };
       showMessage(
-        errorMessages[error.code] || error.message,
+        errorMessages[error.code] || `Email: ${error.message}`,
         'error'
       );
     } finally {
@@ -68,17 +68,17 @@ export default function ProfilePage({ onBack, darkMode }) {
   const handleChangePassword = async (e) => {
     e.preventDefault();
     if (!newPassword || !confirmPassword) {
-      showMessage(t('profile.passwordRequired', 'Please fill in all password fields'), 'error');
+      showMessage(t('profile.passwordRequired', 'Password: Please fill in all fields'), 'error');
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      showMessage(t('profile.passwordsMismatch', 'Passwords do not match'), 'error');
+      showMessage(t('profile.passwordsMismatch', 'Password: Passwords do not match'), 'error');
       return;
     }
 
     if (newPassword.length < 6) {
-      showMessage(t('profile.passwordTooShort', 'Password must be at least 6 characters'), 'error');
+      showMessage(t('profile.passwordTooShort', 'Password: Must be at least 6 characters'), 'error');
       return;
     }
 
@@ -90,11 +90,11 @@ export default function ProfilePage({ onBack, darkMode }) {
       showMessage(t('profile.passwordUpdated', 'Password updated successfully'), 'success');
     } catch (error) {
       const errorMessages = {
-        'auth/weak-password': t('validation.weakPassword', 'Password is too weak'),
-        'auth/requires-recent-login': t('profile.requiresRecentLogin', 'Please log out and log in again to change password'),
+        'auth/weak-password': t('validation.weakPassword', 'Password: Too weak'),
+        'auth/requires-recent-login': t('profile.requiresRecentLogin', 'Password: Please log out and log in again to update'),
       };
       showMessage(
-        errorMessages[error.code] || error.message,
+        errorMessages[error.code] || `Password: ${error.message}`,
         'error'
       );
     } finally {

@@ -27,11 +27,11 @@ export const sanitizeString = (input) => {
 export const validateEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    return { valid: false, error: 'Invalid email format' };
+    return { valid: false, error: 'Email: Invalid format' };
   }
 
   if (email.length > 254) {
-    return { valid: false, error: 'Email too long (max 254 characters)' };
+    return { valid: false, error: 'Email: Too long (max 254 characters)' };
   }
 
   return { valid: true, sanitized: email.toLowerCase().trim() };
@@ -44,11 +44,11 @@ export const validateSubscriptionName = (name) => {
   const sanitized = sanitizeString(name).trim();
 
   if (!sanitized || sanitized.length === 0) {
-    return { valid: false, error: 'Name cannot be empty' };
+    return { valid: false, error: 'Subscription Name: Cannot be empty' };
   }
 
   if (sanitized.length > 200) {
-    return { valid: false, error: 'Name too long (max 200 characters)' };
+    return { valid: false, error: 'Subscription Name: Too long (max 200 characters)' };
   }
 
   return { valid: true, sanitized };
@@ -61,15 +61,15 @@ export const validateCost = (cost) => {
   const numCost = parseFloat(cost);
 
   if (isNaN(numCost)) {
-    return { valid: false, error: 'Cost must be a number' };
+    return { valid: false, error: 'Cost: Must be a number' };
   }
 
   if (numCost <= 0) {
-    return { valid: false, error: 'Cost must be greater than 0' };
+    return { valid: false, error: 'Cost: Must be greater than 0' };
   }
 
   if (numCost > 999999) {
-    return { valid: false, error: 'Cost too high (max 999999)' };
+    return { valid: false, error: 'Cost: Too high (max 999999)' };
   }
 
   // Round to 2 decimal places
