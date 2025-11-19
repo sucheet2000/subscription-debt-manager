@@ -111,10 +111,11 @@ export const useSubscriptions = (authUser) => {
     }
 
     try {
+      const appId = window.__appId || 'default';
       const subscriptionsRef = collection(
         db,
         'artifacts',
-        'default',
+        appId,
         'users',
         authUser.uid,
         'subscriptions'
@@ -140,10 +141,11 @@ export const useSubscriptions = (authUser) => {
   // Delete subscription
   const handleDeleteSubscription = async (id) => {
     try {
+      const appId = window.__appId || 'default';
       const subscriptionsRef = collection(
         db,
         'artifacts',
-        'default',
+        appId,
         'users',
         authUser.uid,
         'subscriptions'
@@ -160,10 +162,11 @@ export const useSubscriptions = (authUser) => {
   // Toggle cancellation status
   const handleToggleCancellation = async (id, isAwaitingCancellation) => {
     try {
+      const appId = window.__appId || 'default';
       const subscriptionsRef = collection(
         db,
         'artifacts',
-        'default',
+        appId,
         'users',
         authUser.uid,
         'subscriptions'
