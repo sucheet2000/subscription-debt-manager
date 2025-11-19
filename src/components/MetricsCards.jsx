@@ -16,10 +16,15 @@ function MetricsCards({
   isApproachingBudget,
   metricsCurrency,
   budgetCurrency,
+  currentSpending,
+  budgetDisplayMode,
+  onBudgetDisplayModeToggle,
   darkMode,
   onBudgetClick,
 }) {
   const { t } = useTranslation();
+
+  const budgetRemaining = budgetLimit ? budgetLimit - currentSpending : 0;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -97,7 +102,7 @@ function MetricsCards({
       </div>
 
       {/* Budget Status Card */}
-      <div className={`rounded-xl p-7 transition-all duration-300 cursor-pointer ${
+      <div className={`rounded-xl p-7 transition-all duration-300 ${
         isBudgetExceeded
           ? darkMode
             ? 'bg-gradient-to-br from-red-900/30 to-red-800/10 border-2 border-red-400/50 hover:border-red-400/70'
@@ -109,44 +114,81 @@ function MetricsCards({
             : darkMode
               ? 'bg-gray-800/50 backdrop-blur-sm border border-accent-300/20 hover:border-accent-300/40 hover:bg-gray-800/70'
               : 'bg-white/80 backdrop-blur-sm border border-gray-200'
-      }`} onClick={onBudgetClick}>
-        <p className={`text-xs font-semibold uppercase tracking-widest mb-3 ${
-          isBudgetExceeded ? (darkMode ? 'text-red-400' : 'text-red-700') :
-          isApproachingBudget ? (darkMode ? 'text-yellow-400' : 'text-yellow-700') :
-          darkMode ? 'text-gray-400' : 'text-gray-600'
-        }`}>
-          {t('metrics.budgetStatus')}
-        </p>
-        {budgetLimit ? (
-          <>
-            <p className={`text-2xl sm:text-3xl font-bold tracking-tight mb-2 ${
-              isBudgetExceeded ? (darkMode ? 'text-red-300' : 'text-red-600') :
-              isApproachingBudget ? (darkMode ? 'text-yellow-300' : 'text-yellow-600') :
-              darkMode ? 'text-white' : 'text-gray-900'
-            }`}>
-              {budgetSpent.toFixed(0)}%
-            </p>
-            <div className={`w-full h-2 rounded-full mb-2 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
-              <div className={`h-full rounded-full transition-all ${
-                isBudgetExceeded ? 'bg-red-500' :
-                isApproachingBudget ? 'bg-yellow-500' :
-                'bg-green-500'
-              }`} style={{ width: `${Math.min(budgetSpent, 100)}%` }}></div>
+      }`}>
+        <div className="flex items-center justify-between mb-3">
+          <p className={`text-xs font-semibold uppercase tracking-widest ${
+            isBudgetExceeded ? (darkMode ? 'text-red-400' : 'text-red-700') :
+            isApproachingBudget ? (darkMode ? 'text-yellow-400' : 'text-yellow-700') :
+            darkMode ? 'text-gray-400' : 'text-gray-600'
+          }`}>
+            {t('metrics.budgetStatus')}
+          </p>
+          {budgetLimit && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onBudgetDisplayModeToggle();
+              }}
+              className={`p-1.5 rounded-md transition-colors ${
+                darkMode
+                  ? 'hover:bg-gray-700/50 text-gray-400 hover:text-accent-300'
+                  : 'hover:bg-gray-200/50 text-gray-600 hover:text-accent-500'
+              }`}
+              title={budgetDisplayMode === 'percentage' ? 'Show remaining amount' : 'Show percentage'}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="16 3 21 3 21 8"></polyline>
+                <line x1="4" y1="20" x2="21" y2="3"></line>
+                <polyline points="21 16 21 21 16 21"></polyline>
+                <line x1="15" y1="15" x2="21" y2="21"></line>
+                <line x1="4" y1="4" x2="9" y2="9"></line>
+              </svg>
+            </button>
+          )}
+        </div>
+        <div onClick={onBudgetClick} className="cursor-pointer">
+          {budgetLimit ? (
+            <>
+              <p className={`text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-2 break-words ${
+                isBudgetExceeded ? (darkMode ? 'text-red-300' : 'text-red-600') :
+                isApproachingBudget ? (darkMode ? 'text-yellow-300' : 'text-yellow-600') :
+                darkMode ? 'text-white' : 'text-gray-900'
+              }`}>
+                {budgetDisplayMode === 'percentage' ? (
+                  `${budgetSpent.toFixed(0)}%`
+                ) : (
+                  new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: budgetCurrency,
+                    minimumFractionDigits: 2,
+                  }).format(budgetRemaining)
+                )}
+              </p>
+              <div className={`w-full h-2 rounded-full mb-2 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
+                <div className={`h-full rounded-full transition-all ${
+                  isBudgetExceeded ? 'bg-red-500' :
+                  isApproachingBudget ? 'bg-yellow-500' :
+                  'bg-green-500'
+                }`} style={{ width: `${Math.min(budgetSpent, 100)}%` }}></div>
+              </div>
+              <p className={`text-xs font-medium ${
+                isBudgetExceeded ? (darkMode ? 'text-red-400/70' : 'text-red-700') :
+                isApproachingBudget ? (darkMode ? 'text-yellow-400/70' : 'text-yellow-700') :
+                darkMode ? 'text-gray-500' : 'text-gray-600'
+              }`}>
+                {budgetDisplayMode === 'percentage'
+                  ? (isBudgetExceeded ? t('metrics.budgetExceeded') : isApproachingBudget ? t('metrics.approachingBudget') : t('metrics.withinBudget'))
+                  : `${budgetRemaining >= 0 ? 'Available' : 'Over budget'}`
+                }
+              </p>
+            </>
+          ) : (
+            <div className={`text-sm text-center py-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              <p className="font-semibold mb-2">{t('metrics.clickToSetBudget')}</p>
+              <p className="text-xs">{t('metrics.noBudgetConfigured')}</p>
             </div>
-            <p className={`text-xs font-medium ${
-              isBudgetExceeded ? (darkMode ? 'text-red-400/70' : 'text-red-700') :
-              isApproachingBudget ? (darkMode ? 'text-yellow-400/70' : 'text-yellow-700') :
-              darkMode ? 'text-gray-500' : 'text-gray-600'
-            }`}>
-              {isBudgetExceeded ? t('metrics.budgetExceeded') : isApproachingBudget ? t('metrics.approachingBudget') : t('metrics.withinBudget')}
-            </p>
-          </>
-        ) : (
-          <div className={`text-sm text-center py-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-            <p className="font-semibold mb-2">{t('metrics.clickToSetBudget')}</p>
-            <p className="text-xs">{t('metrics.noBudgetConfigured')}</p>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

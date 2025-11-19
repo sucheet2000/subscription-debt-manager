@@ -565,6 +565,10 @@ export default function App() {
     const saved = localStorage.getItem('budgetCurrency');
     return saved || 'USD';
   });
+  const [budgetDisplayMode, setBudgetDisplayMode] = useState(() => {
+    const saved = localStorage.getItem('budgetDisplayMode');
+    return saved || 'percentage';
+  });
   const [showBudgetModal, setShowBudgetModal] = useState(false);
 
   // Duplicate Detection State
@@ -601,7 +605,8 @@ export default function App() {
       localStorage.setItem('budgetType', budgetType);
       localStorage.setItem('budgetCurrency', budgetCurrency);
     }
-  }, [budgetLimit, budgetType, budgetCurrency]);
+    localStorage.setItem('budgetDisplayMode', budgetDisplayMode);
+  }, [budgetLimit, budgetType, budgetCurrency, budgetDisplayMode]);
 
   // ===== CUSTOM HOOKS INTEGRATION =====
   // Initialize all three custom hooks for business logic
@@ -1267,6 +1272,9 @@ export default function App() {
           isApproachingBudget={isApproachingBudget}
           metricsCurrency={metricsCurrency}
           budgetCurrency={budgetCurrency}
+          currentSpending={currentSpending}
+          budgetDisplayMode={budgetDisplayMode}
+          onBudgetDisplayModeToggle={() => setBudgetDisplayMode(prev => prev === 'percentage' ? 'remaining' : 'percentage')}
           darkMode={darkMode}
           onBudgetClick={() => setShowBudgetModal(true)}
         />
