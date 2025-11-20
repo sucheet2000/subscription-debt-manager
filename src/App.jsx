@@ -36,7 +36,6 @@ import {
   TrendingUp,
   PieChart as PieChartIcon,
   Globe,
-  LogOut,
   Settings,
 } from 'lucide-react';
 import {
@@ -539,7 +538,7 @@ const LazyComponentLoader = ({ darkMode = false }) => (
 // Main App Component
 export default function App() {
   const { t, i18n } = useTranslation();
-  const { user: authUser, logout } = useUser();
+  const { user: authUser } = useUser();
   // ===== OLD STATE DECLARATIONS NOW MANAGED BY HOOKS =====
   // Removed: subscriptions, loading, editingId, formErrors, sortConfig, formData
   // Removed: searchTerm, filterStatus, filterCategory, filterMinCost, filterMaxCost, filterStartDate, filterEndDate
@@ -1154,7 +1153,11 @@ export default function App() {
       } sticky top-0 z-40 transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex items-center justify-between">
-            <div>
+            <button
+              onClick={() => setShowProfile(false)}
+              className="text-left hover:opacity-80 transition-opacity"
+              title="Go to home"
+            >
               <h1 className={`text-3xl sm:text-4xl font-bold tracking-tight ${
                 darkMode ? 'bg-gradient-to-r from-accent-300 to-accent-200 bg-clip-text text-transparent' : 'text-gray-900'
               }`}>
@@ -1163,7 +1166,7 @@ export default function App() {
               <p className={`text-sm mt-2 font-medium ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 {t('app.subtitle')}
               </p>
-            </div>
+            </button>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setDarkMode(!darkMode)}
@@ -1225,17 +1228,6 @@ export default function App() {
                 🧪 Test
               </button>
               )}
-              <button
-                onClick={logout}
-                className={`p-2 rounded-lg transition-all duration-200 ${
-                  darkMode
-                    ? 'bg-red-900/30 text-red-400 hover:bg-red-900/50'
-                    : 'bg-red-100 text-red-600 hover:bg-red-200'
-                }`}
-                title="Logout"
-              >
-                <LogOut size={20} />
-              </button>
               <button
                 onClick={() => setShowForm(true)}
                 className={`flex items-center gap-2 font-semibold py-2 px-4 rounded-lg transition-all duration-200 ${
